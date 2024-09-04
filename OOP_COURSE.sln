@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practic_!", "Practic_!\Prac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Practic 4.09", "Practic 4.09", "{784D5B11-E35E-4B07-B5E7-3ACAFC271865}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "first hw", "first hw", "{C858EC12-7ADA-422C-B2AA-3AAC9064BD17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -44,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3EC6FFA0-64FF-455B-BEAA-85BFA59CB2B3} = {784D5B11-E35E-4B07-B5E7-3ACAFC271865}
 		{784D5B11-E35E-4B07-B5E7-3ACAFC271865} = {9E691928-6640-4919-8322-7AE8EE11FBD7}
+		{C858EC12-7ADA-422C-B2AA-3AAC9064BD17} = {27153906-738A-4BAF-ADBD-B6294ADE01DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16BDC3CF-6FB1-4A48-8C48-A1BF70453EFC}
