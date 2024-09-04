@@ -53,4 +53,5 @@ private:
 int main()
 {
 	std::vector<Student> student;
+	return 0;
 }
