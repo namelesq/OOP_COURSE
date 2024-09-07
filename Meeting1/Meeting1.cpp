@@ -8,18 +8,17 @@ private:
     int numerator;
     int denominator;
 
-    int simplify(int num, int denom)
+    void simplify()
     {
-        int gcd = std::gcd(numerator, denominator);
-        num /= gcd;
-        denom /= gcd;
+        int gcd = std::gcd(numerator,denominator);
+        numerator /= gcd;
+        denominator /= gcd;
 
         if (denominator < 0) 
         {
-            num = -num;
-            denom = -denom;
+            numerator = -numerator;
+            denominator = -denominator;
         }
-        return num,denom;
     }
 
 public:
@@ -35,16 +34,14 @@ public:
             std::cerr << "Denominator cannot be zero. Setting to 1." << std::endl;
             denominator = 1;
         }
-        simplify(numerator, denominator);
+        simplify();
     }
 
-    Fraction addition(Fraction fract1, Fraction fract2)
+    Fraction operator+(const Fraction &other) const
     {
-        int newNum, newDenom;
-        newNum = fract1.numerator * fract2.denominator + fract2.numerator * fract1.denominator;
-        newDenom = fract1.denominator * fract2.denominator;
-        simplify(newNum,newDenom);
-        return Fraction(newNum, newDenom);
+        int newNum = numerator*other.denominator+other.numerator*denominator;
+        int newDenom = denominator*other.denominator; 
+        return Fraction(newNum, newDenom);  
     }
 
     Fraction subtraction(Fraction fract1, Fraction fract2)
@@ -55,7 +52,7 @@ public:
         return Fraction(newNum, newDenom);
     }
 
-    void display() const 
+    void display() 
     {
         std::cout << numerator << "/" << denominator << std::endl;
     }
@@ -76,11 +73,11 @@ int main() {
     std::cout << "Second Fraction: ";
     frac2.display();
 
-    result = frac1 + frac2;
+    result = result.addition(frac1,frac2);
     std::cout << "Addition: ";
     result.display();
 
-    result = frac1 - frac2;
+    result = result.subtraction(frac1,frac2);
     std::cout << "Subtraction: ";
     result.display();
 
