@@ -50,6 +50,7 @@ public:
         newNum = fract1.numerator * fract2.denominator - fract2.numerator * fract1.denominator;
         newDenom = fract1.denominator * fract2.denominator;
         return Fraction(newNum, newDenom);
+
     }
 
     void display() 
