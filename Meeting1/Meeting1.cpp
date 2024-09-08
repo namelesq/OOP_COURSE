@@ -1,20 +1,19 @@
-
 #include <iostream>
-#include <numeric>  
+#include <numeric> 
 
-class Fraction 
-{
+class Fraction {
 private:
     int numerator;
     int denominator;
 
-    void simplify()
+
+    void simplify() 
     {
-        int gcd = std::gcd(numerator,denominator);
+        int gcd = std::gcd(numerator, denominator);
         numerator /= gcd;
         denominator /= gcd;
 
-        if (denominator < 0) 
+        if (denominator < 0)
         {
             numerator = -numerator;
             denominator = -denominator;
@@ -22,73 +21,83 @@ private:
     }
 
 public:
-    
-    void input() 
+
+    Fraction(int num = 0, int denom = 1) : numerator(num), denominator(denom) 
+    {
+        if (denominator == 0) 
+        {
+            std::cout<<"Denominator cannot be zero.";
+        }
+        simplify();
+    }
+
+    void input()
     {
         std::cout << "Enter numerator: ";
         std::cin >> numerator;
         std::cout << "Enter denominator: ";
         std::cin >> denominator;
-        if (denominator == 0) 
-        {
-            std::cerr << "Denominator cannot be zero. Setting to 1." << std::endl;
-            denominator = 1;
+        if (denominator == 0) {
+            throw std::invalid_argument("Denominator cannot be zero.");
         }
         simplify();
     }
 
-    Fraction operator+(const Fraction &other) const
+    Fraction operator+(const Fraction& other) 
     {
-        int newNum = numerator*other.denominator+other.numerator*denominator;
-        int newDenom = denominator*other.denominator; 
-        return Fraction(newNum, newDenom);  
+        return Fraction(numerator * other.denominator + other.numerator * denominator,
+            denominator * other.denominator);
     }
 
-    Fraction subtraction(Fraction fract1, Fraction fract2)
+    Fraction operator-(const Fraction& other) 
     {
-        int newNum, newDenom;
-        newNum = fract1.numerator * fract2.denominator - fract2.numerator * fract1.denominator;
-        newDenom = fract1.denominator * fract2.denominator;
-        return Fraction(newNum, newDenom);
-
+        return Fraction(numerator * other.denominator - other.numerator * denominator,
+            denominator * other.denominator);
     }
 
-    void display() 
+    Fraction operator*(const Fraction& other) 
     {
-        std::cout << numerator << "/" << denominator << std::endl;
+        return Fraction(numerator * other.numerator, denominator * other.denominator);
+    }
+
+    Fraction operator/(const Fraction& other)  
+    {
+        if (other.numerator == 0)
+        {
+            std::cout<<"You can't divide by zero";
+        }
+        return Fraction(numerator * other.denominator, denominator * other.numerator);
+    }
+
+    void output() 
+    {
+        std::cout << numerator << "/" << denominator;
     }
 };
 
 int main() {
-    Fraction frac1, frac2, result;
+    Fraction fraction1, fraction2;
+    std::cout << "Enter the first fraction:\n";
+    fraction1.input();
+    std::cout << "Enter the second fraction:\n";
+    fraction2.input();
 
-    std::cout << "Enter first fraction:\\n";
-    frac1.input();
+    Fraction sum = fraction1 + fraction2;
+    Fraction difference = fraction1 - fraction2;
+    Fraction product = fraction1 * fraction2;
+    Fraction quotient = fraction1 / fraction2;
 
-    std::cout << "Enter second fraction:\\n";
-    frac2.input();
-
-    std::cout << "First Fraction: ";
-    frac1.display();
-
-    std::cout << "Second Fraction: ";
-    frac2.display();
-
-    result = result.addition(frac1,frac2);
-    std::cout << "Addition: ";
-    result.display();
-
-    result = result.subtraction(frac1,frac2);
-    std::cout << "Subtraction: ";
-    result.display();
-
-    result = frac1 * frac2;
-    std::cout << "Multiplication: ";
-    result.display();
-
-    result = frac1 / frac2;
-    std::cout << "Division: ";
-    result.display();
+    std::cout << "Sum: ";
+    sum.output();
+    std::cout << "\n";
+    std::cout << "Difference: ";
+    difference.output();
+    std::cout << "\n";
+    std::cout << "Product: ";
+    product.output();
+    std::cout << "\n";
+    std::cout << "Quotient: ";
+    quotient.output();
 
     return 0;
 }
