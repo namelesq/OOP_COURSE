@@ -38,7 +38,7 @@ public:
         std::cout << "Enter denominator: ";
         std::cin >> denominator;
         if (denominator == 0) {
-            throw std::invalid_argument("Denominator cannot be zero.");
+            std::cout<<"Denominator cannot be zero.";
         }
         simplify();
     }
