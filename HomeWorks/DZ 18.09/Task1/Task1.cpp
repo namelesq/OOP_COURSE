@@ -7,7 +7,7 @@ private:
     int denominator;
 
 
-    void simplify() 
+    void simplify()
     {
         int gcd = std::gcd(numerator, denominator);
         numerator /= gcd;
@@ -22,11 +22,11 @@ private:
 
 public:
 
-    Fraction(int num = 0, int denom = 1) : numerator(num), denominator(denom) 
+    Fraction(int num = 0, int denom = 1) : numerator(num), denominator(denom)
     {
-        if (denominator == 0) 
+        if (denominator == 0)
         {
-            std::cout<<"Denominator cannot be zero.";
+            std::cout << "Denominator cannot be zero.";
         }
         simplify();
     }
@@ -38,38 +38,38 @@ public:
         std::cout << "Enter denominator: ";
         std::cin >> denominator;
         if (denominator == 0) {
-            std::cout<<"Denominator cannot be zero.";
+            std::cout << "Denominator cannot be zero.";
         }
         simplify();
     }
 
-    Fraction operator+(const Fraction& other) 
+    Fraction operator+(const Fraction& other)
     {
         return Fraction(numerator * other.denominator + other.numerator * denominator,
             denominator * other.denominator);
     }
 
-    Fraction operator-(const Fraction& other) 
+    Fraction operator-(const Fraction& other)
     {
         return Fraction(numerator * other.denominator - other.numerator * denominator,
             denominator * other.denominator);
     }
 
-    Fraction operator*(const Fraction& other) 
+    Fraction operator*(const Fraction& other)
     {
         return Fraction(numerator * other.numerator, denominator * other.denominator);
     }
 
-    Fraction operator/(const Fraction& other)  
+    Fraction operator/(const Fraction& other)
     {
         if (other.numerator == 0)
         {
-            std::cout<<"You can't divide by zero";
+            std::cout << "You can't divide by zero";
         }
         return Fraction(numerator * other.denominator, denominator * other.numerator);
     }
 
-    void output() 
+    void output()
     {
         std::cout << numerator << "/" << denominator;
     }
