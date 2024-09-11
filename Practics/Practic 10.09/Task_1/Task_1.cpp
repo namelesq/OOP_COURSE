@@ -10,13 +10,14 @@ private:
 	bool isOn;
 
 public:
+	short int position;
 	Lift()=delete;
 	Lift(short int lowerFloor, short int upperFloor, short int currentFloor);
 
 
 	Lift::Lift(short int upperFloor, short int lowerFloor)
 	{
-
+		
 	}
 		
 
