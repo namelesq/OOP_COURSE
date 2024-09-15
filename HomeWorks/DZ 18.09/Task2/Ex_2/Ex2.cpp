@@ -97,12 +97,12 @@ public:
 		}
 	}
 
-	void Serialize(std::ofstream&ofs)const
+	void Serialize(std::ofstream&ofs)
 	{
 		ofs << initials << " " << workNumber << " " << mobileNumber 
 			<< " " << homeNumber << " " << addInfo<<"\n";
 	}
-
+		
 	void Deserialize(std::ifstream& ifs)
 	{
 		ifs >> initials >> workNumber >> mobileNumber >> homeNumber >> addInfo;
