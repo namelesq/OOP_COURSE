@@ -47,7 +47,7 @@ public:
 
     void output() 
     {
-        std::cout << data << std::endl;
+        std::cout << data;
     }
 
     static size_t getCount()
