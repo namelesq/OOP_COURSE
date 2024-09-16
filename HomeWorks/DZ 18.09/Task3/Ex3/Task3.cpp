@@ -13,14 +13,14 @@ public:
     String() : length(80)
     {
         data = new char[length];
-        data[0] = '\\0'; 
+        data[0] = '\0'; 
         count++;
     }
 
     explicit String(size_t size) : length(size)
     {
         data = new char[length];
-        data[0] = '\\0';
+        data[0] = '\0';
         count++;
     }
 
@@ -28,7 +28,7 @@ public:
     {
         length = strlen(str) + 1; 
         data = new char[length];
-        strcpy(data, str);
+        strcpy_s(data, length, str);
         count++;
     }
 
@@ -59,7 +59,8 @@ public:
 
 size_t String::count = 0;
 
-int main() {
+int main() 
+{
     String str1;          
     str1.input();        
     str1.output();       
@@ -71,7 +72,7 @@ int main() {
     String str3("Hello, world");  
     str3.output();       
 
-    std::cout << "Количество созданных объектов String: " << String::getCount();
+    std::cout << "Quantity objects String: " << String::getCount();
 
     return 0;
 }
