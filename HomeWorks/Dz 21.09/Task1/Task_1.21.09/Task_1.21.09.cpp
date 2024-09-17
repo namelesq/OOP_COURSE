@@ -1,88 +1,113 @@
 ﻿#include <iostream>
-#include <string>
-#include <vector>
+#include <cstring>
 
-class Human
+class Person
 {
 private:
-	std::string initials;
-	std::string gender;
+    char* name;
 public:
-	Human() {};
-	
-	Human(std::string init, std::string gend):
-		initials{init},gender{gend}
-	{
-		initials = init;
-		gender = gend;
-	}
+    Person(const char* name) 
+    {
+        this->name = new char[strlen(name) + 1];
+        strcpy_s(this->name,strlen(name)+1, name);
+    }
 
-	void Display() {std::cout << "Initials: " << initials << " Gender: " << gender;}
+    Person(const Person& other) 
+    {
+        name = new char[strlen(other.name) + 1];
+        strcpy_s(name, strlen(other.name)+1, other.name);
+    }
+
+    ~Person() 
+    {
+        delete[] name;
+    }
+
+    void display()
+    {
+        std::cout << name<<"\n";
+    }
 };
 
-class Apartament
+class Apartment
 {
 private:
-	std::vector<Human> human;
-	int NumberApartament;
-	int floor;
-
+    Person** residents;
+    int residentCount;
 public:
-	Apartament(){}
-	
-	Apartament(std::vector<Human> Human, int Num, int floo) :
-		human{ Human }, NumberApartament{ Num }, floor{ floo }
-	{
-		human = Human;
-		NumberApartament = Num;
-		floor = floo;
-	}
+    Apartment() : residentCount(0), residents(nullptr) {}
 
-	void AddApartaments()
+    void addResident(const char* name)
+    {
+        Person** temp = new Person * [residentCount + 1];
+        for (int i = 0; i < residentCount; i++)
+        {
+            temp[i] = residents[i];
+        }
+        temp[residentCount] = new Person(name);
+        delete[] residents;
+        residents = temp;
+        residentCount++;
+    }
+
+    ~Apartment() 
+    {
+        for (int i = 0; i < residentCount; i++) 
+        {
+            delete residents[i];
+        }
+        delete[] residents;
+    }
+
+    void displayResidents() {
+        for (int i = 0; i < residentCount; i++) 
+        {
+            residents[i]->display();
+        }
+    }
 };
 
 class House
 {
 private:
-	std::vector<Apartament> house;
-	int NumberOfHouse;
-
+    Apartment* apartments;
+    int apartmentCount;
 public:
-	House(){}
+    House(int count) : apartmentCount(count)
+    {
+        apartments = new Apartment[count];
+    }
 
-	House(std::vector<Apartament> aparts, int NumberHouse) :
-		house{ aparts },NumberOfHouse(NumberHouse)
-	{
-		house = aparts;
-		NumberOfHouse = NumberHouse;
-	}
+    void addResidentToApartment(int apartmentIndex, const char* name)
+    {
+        if (apartmentIndex >= 0 && apartmentIndex < apartmentCount) 
+        {
+            apartments[apartmentIndex].addResident(name);
+        }
+    }
 
-	void InputHouse(std::vector<House>&house)
-	{
-		House houseK;
-		std::cout << "Enter number of house: ";
-		std::cin >> houseK.NumberOfHouse;
-		house.push_back(houseK);
-	}
+    ~House() {
+        delete[] apartments;
+    }
 
-	void PrintVectorOfHouse(std::vector<House>& house)
-	{
-		
-	}
+    void displayAllResidents()
+    {
+        for (int i = 0; i < apartmentCount; i++) 
+        {
+            std::cout << "Apartment " << i + 1 << " \nresidents:";
+            apartments[i].displayResidents();
+        }
+    }
 };
 
-
-int main()
+int main() 
 {
-	std::vector<Human> human;
-	std::vector<Apartament> aprt_s;
-	std::vector<House> house;
-	Human human_s;
-	human_s.InputHuman(human);
-	Apartament apartament;
-	apartament.InputApartament(aprt_s);
-	House house_s;
-	house_s.InputHouse(house);
-	
-	return 0;
+    House house(2);
+    house.addResidentToApartment(0, "Person 1");
+    house.addResidentToApartment(0, "Person 2");
+    house.addResidentToApartment(1, "Person 3");
+
+    house.displayAllResidents();
+
+    return 0;
 }
