@@ -7,9 +7,9 @@ private:
 	int m_a;
 	int m_b;
 public:
-	Complex(){}
-	
-	Complex(int a, int b) :m_a{ a }, m_b{ b }
+
+		
+	Complex(int a=0, int b=0) :m_a{ a }, m_b{ b }
 	{
 		m_a = a;
 		m_b = b;

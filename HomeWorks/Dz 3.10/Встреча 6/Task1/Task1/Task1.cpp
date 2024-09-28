@@ -24,10 +24,8 @@ public:
 
     Fraction(int num = 0, int denom = 1) : numerator(num), denominator(denom)
     {
-        if (denominator == 0)
-        {
-            std::cout << "Denominator cannot be zero.";
-        }
+        numerator = num;
+        denominator = denom;
         simplify();
     }
 
@@ -37,9 +35,6 @@ public:
         std::cin >> numerator;
         std::cout << "Enter denominator: ";
         std::cin >> denominator;
-        if (denominator == 0) {
-            std::cout << "Denominator cannot be zero.";
-        }
         simplify();
     }
 
@@ -62,10 +57,6 @@ public:
 
     Fraction operator/(const Fraction& other)
     {
-        if (other.numerator == 0)
-        {
-            std::cout << "You can't divide by zero";
-        }
         return Fraction(numerator * other.denominator, denominator * other.numerator);
     }
 

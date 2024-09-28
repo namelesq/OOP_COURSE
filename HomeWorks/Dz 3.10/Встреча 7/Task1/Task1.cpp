@@ -25,11 +25,7 @@ public:
 	}
 	Overcoat operator=(const Overcoat& over)
 	{
-		if (&over != this)
-		{
-			m_type = over.m_type;
-			m_cost = over.m_cost;
-		}
+		if (&over != this){m_type = over.m_type,m_cost = over.m_cost;}
 		std::cout << "Assignment completed\n";
 		return *this;
 	}

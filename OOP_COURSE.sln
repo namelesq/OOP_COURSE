@@ -53,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Встреча 7", "Вст�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task1", "HomeWorks\Dz 3.10\Встреча 7\Task1\Task1.vcxproj", "{705F9645-51BC-4528-8431-2726129E8ACB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task2", "HomeWorks\Dz 3.10\Встреча 7\Task2\Task2.vcxproj", "{B3A14A74-DFBB-4B38-BB47-843BE69A531E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -157,6 +159,14 @@ Global
 		{705F9645-51BC-4528-8431-2726129E8ACB}.Release|x64.Build.0 = Release|x64
 		{705F9645-51BC-4528-8431-2726129E8ACB}.Release|x86.ActiveCfg = Release|Win32
 		{705F9645-51BC-4528-8431-2726129E8ACB}.Release|x86.Build.0 = Release|Win32
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Debug|x64.ActiveCfg = Debug|x64
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Debug|x64.Build.0 = Debug|x64
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Debug|x86.ActiveCfg = Debug|Win32
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Debug|x86.Build.0 = Debug|Win32
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Release|x64.ActiveCfg = Release|x64
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Release|x64.Build.0 = Release|x64
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Release|x86.ActiveCfg = Release|Win32
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,6 +195,7 @@ Global
 		{12B8D3B9-E9A0-4CB5-8A54-85E12E26C1E5} = {1D7EB958-111D-4C47-9884-5BCC71873B27}
 		{5B036922-E8DF-42D8-B86D-F9E4D89B3DA5} = {58C7C56B-3AED-4086-A2D9-3BFCF8FEEADF}
 		{705F9645-51BC-4528-8431-2726129E8ACB} = {5B036922-E8DF-42D8-B86D-F9E4D89B3DA5}
+		{B3A14A74-DFBB-4B38-BB47-843BE69A531E} = {5B036922-E8DF-42D8-B86D-F9E4D89B3DA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16BDC3CF-6FB1-4A48-8C48-A1BF70453EFC}
