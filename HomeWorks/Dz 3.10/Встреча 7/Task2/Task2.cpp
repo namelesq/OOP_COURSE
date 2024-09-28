@@ -15,7 +15,7 @@ public:
 	{
 		std::cout << "Enter square of flat: ";
 		std::cin >> m_square;
-		std::cout << "Enter cost of the flat: ";
+		std::cout << "Enter cost of the flat: ";	  
 		std::cin >> m_cost;
 	}
 	friend bool operator==(const Flat& flat1, const Flat& flat2)
