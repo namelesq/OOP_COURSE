@@ -4,63 +4,58 @@
 class String
 {
 private:
-    char* data;
+    char* m_data;
 public:
-    String() : data(nullptr) {}
-
+  
     String(const char* str)
     {
-        if (str)
-        {
-            data = new char[strlen(str) + 1];
-            strcpy_s(data, strlen(str) + 1, str);
-        }
-        else { data = nullptr; }
+        m_data = new char[strlen(str) + 1];
+        strcpy_s(m_data, strlen(str) + 1, str);
     }
 
-    ~String() { delete[] data; }
+    ~String() { delete[] m_data; }
 
     String(const String& other)
     {
-        if (other.data)
+        if (other.m_data)
         {
-            data = new char[strlen(other.data) + 1];
-            strcpy_s(data, strlen(other.data) + 1, other.data);
+            m_data = new char[strlen(other.m_data) + 1];
+            strcpy_s(m_data, strlen(other.m_data) + 1, other.m_data);
         }
-        else { data = nullptr; }
+        else { m_data = nullptr; }
     }
 
     String& operator=(const String& other)
     {
         if (this != &other)
         {
-            delete[] data;
-            if (other.data)
+            delete[] m_data;
+            if (other.m_data)
             {
-                data = new char[strlen(other.data) + 1];
-                strcpy_s(data, strlen(other.data) + 1, other.data);
+                m_data = new char[strlen(other.m_data) + 1];
+                strcpy_s(m_data, strlen(other.m_data) + 1, other.m_data);
             }
-            else { data = nullptr; }
+            else { m_data = nullptr; }
         }
         return *this;
     }
 
-    String(String& other) : data{ other.data } { other.data = nullptr; }
+    String(String& other) : m_data{ other.m_data } { other.m_data = nullptr; }
 
     String& operator=(String&& other)  
     {
         if (this != &other)
         {
-            delete[] data; 
-            data = other.data; 
-            other.data = nullptr; 
+            delete[] m_data; 
+            m_data = other.m_data; 
+            other.m_data = nullptr; 
         }
         return *this;
     }
 
     void print() const 
     {
-        if (data) {std::cout << data<<"\n"; }
+        if (m_data) {std::cout << m_data<<"\n"; }
         else { std::cout << "Empty string."; }
     }
 };
