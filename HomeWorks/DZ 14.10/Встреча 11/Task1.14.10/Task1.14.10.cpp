@@ -88,7 +88,7 @@ void BinarySearch(std::vector<T> vector, T element)
 	while (left <= rigth)
 	{
 		size_t middle = (rigth+left) / 2;
-		if (vector[middle] = element) { std::cout << "Index of element: " << middle<<"\n"; break; }
+		if (vector[middle] == element) { std::cout << "Index of element: " << middle<<"\n"; break; }
 		if (vector[middle] < element) { left = middle + 1;}
 		if (vector[middle] > element) { rigth = middle - 1; }
 	}
