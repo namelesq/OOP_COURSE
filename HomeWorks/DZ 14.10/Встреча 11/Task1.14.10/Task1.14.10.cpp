@@ -13,7 +13,7 @@ void PrintArray(std::vector<T> vector)
 }
 
 template<typename T> 
-std::vector<T> SortArray(std::vector<T> vector)
+std::vector<T> SortArray(std::vector<T>& vector)
 {
 	size_t size = vector.size();
 	while (size--)
@@ -43,10 +43,7 @@ void SearchMaxInArray(std::vector<T> vector)
 	T max = vector[0];
 	for (size_t i{ 0 }; i < vector.size(); i++)
 	{
-		if (vector[i] > max)
-		{
-			max = vector[i];
-		}
+		if (vector[i] > max) { max = vector[i]; }
 	}
 	std::cout << "Max in array: " << max << "\n";
 }
@@ -57,14 +54,11 @@ void SearchMinInArray(std::vector<T> vector)
 	T min = vector[0];
 	for (size_t i{ 0 }; i < vector.size(); i++)
 	{
-		if (vector[i] < min)
-		{
-			min = vector[i];
-		}
+		if (vector[i] < min) { min = vector[i]; }
 	}
 	std::cout << "Min in array: " << min << "\n";
 }
-
+	
 template<typename T>
 void ChangeElement(std::vector<T> vector, T element)
 {
@@ -83,17 +77,17 @@ void ChangeElement(std::vector<T> vector, T element)
 }
 
 template<typename T>
-int BinarySearch(std::vector<T> vector, T element)
+size_t BinarySearch(const std::vector<T>& vector, T element)
 {
-	int left=0, rigth = vector.size();
+	size_t left = 0, rigth = vector.size()-1;
 	while (left<=rigth)
 	{
-		int middle = (rigth + left) / 2;
-		if (vector[middle] == element) { break; std::cout << "Index of element: "; return middle; }
+		size_t middle = (rigth+left) / 2;
+		if (vector[middle] == element) { std::cout << "Index of element: "<< middle;  break; }
 		if (vector[middle] < element) { left = middle + 1;}
 		if (vector[middle] > element) { rigth = middle - 1; }
 	}
-	return -1;
+	return size_t(-1);
 }
 
 int main()
@@ -113,13 +107,13 @@ int main()
 	std::cout << "Enter element for binary serach(int): ";
 	std::cin >> elem_i;
 	BinarySearch(NewInt, elem_i);
-	std::cout << "Enter element for binary serach(double): ";
+	std::cout << "\nEnter element for binary serach(double): ";
 	std::cin >> elem_d;
 	BinarySearch(NewDouble, elem_d);
-	std::cout << "Enter elem for change (int): ";
+	std::cout << "\nEnter elem for change (int): ";
 	std::cin >> elem_i;
 	ChangeElement(Integer, elem_i);
-	std::cout << "Enter elem for change (double): ";
+	std::cout << "\nEnter elem for change (double): ";
 	std::cin >> elem_d;
 	ChangeElement(Double, elem_d);
 	return 0;
