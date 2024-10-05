@@ -13,7 +13,7 @@ void PrintArray(std::vector<T> vector)
 }
 
 template<typename T> 
-void SortArray(std::vector<T> vector)
+std::vector<T> SortArray(std::vector<T> vector)
 {
 	size_t size = vector.size();
 	while (size--)
@@ -34,6 +34,7 @@ void SortArray(std::vector<T> vector)
 	}
 	std::cout << "Array is sorted! \n";
 	PrintArray(vector);
+	return vector;
 }
 
 template<typename T>
@@ -82,16 +83,17 @@ void ChangeElement(std::vector<T> vector, T element)
 }
 
 template<typename T>
-void BinarySearch(std::vector<T> vector, T element)
+int BinarySearch(std::vector<T> vector, T element)
 {
-	size_t left{ 0 }, rigth{ vector.size()-1};
-	while (left <= rigth)
+	int left=0, rigth = vector.size();
+	while (left<=rigth)
 	{
-		size_t middle = (rigth+left) / 2;
-		if (vector[middle] == element) { std::cout << "Index of element: " << middle<<"\n"; break; }
+		int middle = (rigth + left) / 2;
+		if (vector[middle] == element) { break; std::cout << "Index of element: "; return middle; }
 		if (vector[middle] < element) { left = middle + 1;}
 		if (vector[middle] > element) { rigth = middle - 1; }
 	}
+	return -1;
 }
 
 int main()
@@ -100,8 +102,8 @@ int main()
 	std::vector<double> Double{ 98.5, 43.5, 100.04, 8.3, 54.4, 12.3, 3.4, 4.3 };
 	PrintArray(Integer);
 	PrintArray(Double);
-	SortArray(Integer);
-	SortArray(Double);
+	std::vector<int> NewInt = SortArray(Integer);
+	std::vector<double>NewDouble = SortArray(Double);
 	SearchMaxInArray(Integer);
 	SearchMinInArray(Integer);
 	SearchMaxInArray(Double);
@@ -110,10 +112,10 @@ int main()
 	double elem_d;
 	std::cout << "Enter element for binary serach(int): ";
 	std::cin >> elem_i;
-	BinarySearch(Integer, elem_i);
+	BinarySearch(NewInt, elem_i);
 	std::cout << "Enter element for binary serach(double): ";
 	std::cin >> elem_d;
-	BinarySearch(Double, elem_d);
+	BinarySearch(NewDouble, elem_d);
 	std::cout << "Enter elem for change (int): ";
 	std::cin >> elem_i;
 	ChangeElement(Integer, elem_i);
