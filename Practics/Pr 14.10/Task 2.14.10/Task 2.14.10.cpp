@@ -38,7 +38,40 @@ public:
 		else { return true; }
 	}
 
+	std::vector<int> RemoveAll()
+	{
+		m_vector.clear();
+		return m_vector;
+	}
+
+	int GetAt()
+	{
+		int index;
+		std::cout << "Enter index of element: ";
+		std::cin >> index;
+		for (int i = 0; i < m_vector.size(); i++)
+		{
+			if (i == index) { return m_vector[i]; }
+		}
+	}
 	
+	void ChangeElement()
+	{
+		int elem;
+		std::cout << "Enter element in array: ";
+		std::cin >> elem;
+		for (int i = 0; i < m_vector.size(); i++)
+		{
+			if (m_vector[i] == elem)
+			{
+				std::cout << "Enter new element: ";
+				std::cin >> m_vector[i];
+			}
+		}
+	}
+
+	bool &operator=(const Array& other)
+	{}
 };
 
 int main()
