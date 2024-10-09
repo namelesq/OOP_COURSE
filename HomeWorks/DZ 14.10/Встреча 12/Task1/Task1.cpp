@@ -1,6 +1,5 @@
 ﻿#include <iostream>
-#include <ctime>
-#include <cstdlib>
+#include<random>
 
 template <class T>
 class Matrix
@@ -10,7 +9,8 @@ private:
 	T** m_matrix;
 
 public:
-	Matrix(size_t size=0, T**matrix=nullptr) :m_size{size}, m_matrix{new T * [m_size]} {}
+	Matrix(size_t size=0, T**matrix=0) :m_size{size}, m_matrix{new T*[m_size]}
+	{}
 
 	~Matrix() { delete[] m_matrix; }
 
@@ -32,13 +32,18 @@ public:
 		}
 	}
 
-	void AutomaticInputData()
+	void AutomaticInputData(T min, T max)
 	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_real_distribution<> DisDouble(min, max);
+		std::uniform_int_distribution<> DisInt(min, max);
 		for (size_t i{ 0 }; i < m_size; i++)
 		{
 			for (size_t j{ 0 }; j < m_size; j++)
 			{
-				m_matrix[i][j] = (T)((double)(rand() % 1000) / 10.0);
+				if constexpr (std::is_same<T, int>::value) { m_matrix[i][j] = DisInt(gen); }
+				else if constexpr (std::is_same<T, double>::value) { m_matrix[i][j] = DisDouble(gen); }
 			}
 		}
 	}
@@ -151,12 +156,12 @@ public:
 
 int main()
 {
-	Matrix<int> matrix;
-	Matrix<double> matrix_1;
+	Matrix<int> matrix{10, new int*[10]};
+	Matrix<double> matrix_1{ 10, new double* [10] };
 	matrix.GetSize();
 	matrix_1.GetSize();
-	matrix.AutomaticInputData();
-	matrix_1.AutomaticInputData();
+	matrix.AutomaticInputData(1,100);
+	matrix_1.AutomaticInputData(1.0,100.0);
 	matrix.operator+();
 	matrix.operator-();
 	matrix.operator*();
