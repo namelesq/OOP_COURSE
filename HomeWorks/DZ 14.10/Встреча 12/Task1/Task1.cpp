@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <ctime>
+#include <cstdlib>
 
 template <class T>
 class Matrix
@@ -9,7 +10,7 @@ private:
 	T** m_matrix;
 
 public:
-	Matrix(size_t size=0, T**matrix=0):m_size{size},m_matrix{new T*[size]}{}
+	Matrix(size_t size=0, T**matrix=nullptr) :m_size{size}, m_matrix{new T * [m_size]} {}
 
 	~Matrix() { delete[] m_matrix; }
 
@@ -30,23 +31,14 @@ public:
 			}
 		}
 	}
-	void AutomaticInputDataInt()
+
+	void AutomaticInputData()
 	{
 		for (size_t i{ 0 }; i < m_size; i++)
 		{
 			for (size_t j{ 0 }; j < m_size; j++)
 			{
-				m_matrix[i][j] = 1 + rand() % 30;
-			}
-		}
-	}
-	void AutomaticInputDataDouble()
-	{
-		for (size_t i{ 0 }; i < m_size; i++)
-		{
-			for (size_t j{ 0 }; j < m_size; j++)
-			{
-				m_matrix[i][j] = (rand() % 30+1)/10;
+				m_matrix[i][j] = (T)((double)(rand() % 1000) / 10.0);
 			}
 		}
 	}
@@ -163,8 +155,8 @@ int main()
 	Matrix<double> matrix_1;
 	matrix.GetSize();
 	matrix_1.GetSize();
-	matrix.AutomaticInputDataInt();
-	matrix_1.AutomaticInputDataDouble();
+	matrix.AutomaticInputData();
+	matrix_1.AutomaticInputData();
 	matrix.operator+();
 	matrix.operator-();
 	matrix.operator*();
