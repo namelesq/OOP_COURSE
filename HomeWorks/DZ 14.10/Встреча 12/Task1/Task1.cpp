@@ -10,10 +10,21 @@ private:
 
 public:
 	Matrix(size_t size=0, T**matrix=0) :m_size{size}, m_matrix{new T*[m_size]}
-	{}
+	{
+		for (size_t i = 0; i < m_size; ++i)
+		{
+			m_matrix[i] = new T[m_size];
+		}
+	}
 
-	~Matrix() { delete[] m_matrix; }
-
+	~Matrix()
+	{
+		for (size_t i = 0; i < m_size; ++i)
+		{
+			delete[] m_matrix[i];
+		}
+		delete[] m_matrix;
+	}
 	void GetSize()
 	{
 		std::cout << "Enter size for matrix: ";
@@ -85,7 +96,7 @@ public:
 	}
 	T CheckFirstElements(size_t in1, size_t in2)
 	{
-		T elem;
+		T elem=0;
 		for (size_t i{ 0 }; i < m_size; i++)
 		{
 			for (size_t j{ 0 }; j < m_size; j++)
@@ -97,7 +108,7 @@ public:
 	}
 	T CheckSecondElement(size_t in3, size_t in4)
 	{
-		T elem;
+		T elem=0;
 		for (size_t i{ 0 }; i < m_size; i++)
 		{
 			for (size_t j{ 0 }; j < m_size; j++)
@@ -162,6 +173,8 @@ int main()
 	matrix_1.GetSize();
 	matrix.AutomaticInputData(1,100);
 	matrix_1.AutomaticInputData(1.0,100.0);
+	matrix.Display();
+	matrix_1.Display();
 	matrix.operator+();
 	matrix.operator-();
 	matrix.operator*();
@@ -173,7 +186,7 @@ int main()
 	matrix.SearchMax();
 	matrix.SearchMin();
 	matrix_1.SearchMax();
-	matrix.SearchMin();
+	matrix_1.SearchMin();
 
 	return 0;
 }
