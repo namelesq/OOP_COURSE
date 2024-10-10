@@ -94,7 +94,7 @@ public:
 		}
 		std::cout << "Min element of matrix: " << min << "\n";
 	}
-	T CheckFirstElements(size_t in1, size_t in2)
+	T CheckElements(size_t in1, size_t in2)
 	{
 		T elem=0;
 		for (size_t i{ 0 }; i < m_size; i++)
@@ -106,18 +106,7 @@ public:
 		}
 		return elem;
 	}
-	T CheckSecondElement(size_t in3, size_t in4)
-	{
-		T elem=0;
-		for (size_t i{ 0 }; i < m_size; i++)
-		{
-			for (size_t j{ 0 }; j < m_size; j++)
-			{
-				if (i == in3 && j == in4) { elem = m_matrix[i][j]; }
-			}
-		}
-		return elem;
-	}
+	
 	void operator+()
 	{;
 		size_t index1, index2, index3, index4;
@@ -125,8 +114,8 @@ public:
 		std::cin >> index1>>index2;
 		std::cout << "Enter second index of element: ";
 		std::cin >> index3>>index4;
-		T elem1 = CheckFirstElements(index1, index2);
-		T elem2 = CheckSecondElement(index3, index4);
+		T elem1 = CheckElements(index1, index2);
+		T elem2 = CheckElements(index3, index4);
 		std::cout << "Summ: " << elem1 << " + " << elem2 << " = " << elem1 + elem2<<"\n";
 	}
 	void operator-()
@@ -136,8 +125,8 @@ public:
 		std::cin >> index1 >> index2;
 		std::cout << "Enter second index of element: ";
 		std::cin >> index3 >> index4;
-		T elem1 = CheckFirstElements(index1, index2);
-		T elem2 = CheckSecondElement(index3, index4);
+		T elem1 = CheckElements(index1, index2);
+		T elem2 = CheckElements(index3, index4);
 		std::cout << "Subtraction: " << elem1 << " - " << elem2 << " = " << elem1 - elem2 << "\n";
 	}
 	void operator*()
@@ -147,8 +136,8 @@ public:
 		std::cin >> index1 >> index2;
 		std::cout << "Enter second index of element: ";
 		std::cin >> index3 >> index4;
-		T elem1 = CheckFirstElements(index1, index2);
-		T elem2 = CheckSecondElement(index3, index4);
+		T elem1 = CheckElements(index1, index2);
+		T elem2 = CheckElements(index3, index4);
 		std::cout << "Composition: " << elem1 << " * " << elem2 << " = " << elem1 * elem2 << "\n";
 	}
 	void operator/(Matrix& matrix)
@@ -158,8 +147,8 @@ public:
 		std::cin >> index1 >> index2;
 		std::cout << "Enter second index of element: ";
 		std::cin >> index3 >> index4;
-		T elem1 = CheckFirstElements(index1, index2);
-		T elem2 = CheckSecondElement(index3, index4);
+		T elem1 = CheckElements(index1, index2);
+		T elem2 = CheckElements(index3, index4);
 		std::cout << "Division: " << elem1 << " / " << elem2 << " = " << elem1 / elem2 << "\n";
 	}
 
