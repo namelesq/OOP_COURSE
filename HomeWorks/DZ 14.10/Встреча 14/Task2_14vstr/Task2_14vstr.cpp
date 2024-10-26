@@ -1,136 +1,133 @@
 ﻿#include <iostream>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 #include <ctime>
-#include <iomanip> 
-#include <fstream>
+#include <iomanip>
 
-// Структура для задания на печать
-struct PrintJob {
+
+struct PrintJob 
+{
     std::string user;
     int priority;
-    std::string documentName;
     time_t requestTime;
 
-    // Конструктор задания
-    PrintJob(std::string user, int priority, std::string documentName)
-        : user(user), priority(priority), documentName(documentName) {
+    PrintJob(const std::string& user, int priority)
+        : user(user), priority(priority)
+    {
         requestTime = std::time(nullptr);
     }
-};
 
-// Компаратор для очере
-// ди с приоритетом
-struct ComparePriority 
-{
-    bool operator()(const PrintJob& a, const PrintJob& b) {
-        // Приоритетные задания будут идти в начале (наибольший приоритет - выше в очереди)
-        return a.priority < b.priority;
-    }
-};
-
-// Очередь печати
-std::priority_queue<PrintJob, std::vector<PrintJob>, ComparePriority> printQueue;
-// Очередь для статистики
-std::vector<PrintJob> printLog;
-
-// Функция для добавления задания в очередь печати
-void addPrintJob(const std::string& user, int priority, const std::string& documentName) {
-    PrintJob job(user, priority, documentName);
-    printQueue.push(job);
-    std::cout << "Задание от пользователя " << user << " добавлено в очередь.\n";
-}
-
-// Функция для форматирования времени
-std::string formatTime(time_t time) {
-    std::tm* tmPtr = std::localtime(&time);
-    std::ostringstream oss;
-    oss << std::put_time(tmPtr, "%Y-%m-%d %H:%M:%S");
-    return oss.str();
-}
-
-// Функция для выполнения задания печати
-void processPrintJob()
-{
-    if (printQueue.empty()) 
+    bool operator<(const PrintJob& other) const
     {
-        std::cout << "Очередь пуста, нет заданий на печать.\n";
-        return;
+        return priority < other.priority;
+    }
+};
+
+
+struct PrintStatistics 
+{
+    std::string user;
+    time_t printTime;
+
+    PrintStatistics(const std::string& user, time_t printTime)
+        : user(user), printTime(printTime) {}
+};
+
+
+class Printer 
+{
+private:
+    std::priority_queue<PrintJob> printQueue; 
+    std::vector<PrintStatistics> statistics;  
+
+public:
+
+    void addPrintJob(const std::string& user, int priority)
+    {
+        printQueue.emplace(user, priority);
+        std::cout << "Added print job for user: " << user << " with priority: " << priority << std::endl;
     }
 
-    // Извлечение задания из очереди
-    PrintJob job = printQueue.top();
-    printQueue.pop();
-
-    // Логирование выполненного задания
-    printLog.push_back(job);
-
-    // Вывод информации о выполнении
-    std::cout << "Печатается документ: " << job.documentName
-        << " от пользователя: " << job.user
-        << " с приоритетом: " << job.priority
-        << " время запроса: " << formatTime(job.requestTime) << "\n";
-}
-
-// Функция для вывода статистики
-void printStatistics() {
-    if (printLog.empty()) {
-        std::cout << "Статистика пуста, нет выполненных заданий.\n";
-        return;
-    }
-
-    std::cout << "\n--- Статистика печати ---\n";
-    for (const auto& job : printLog) {
-        std::cout << "Документ: " << job.documentName
-            << ", Пользователь: " << job.user
-            << ", Приоритет: " << job.priority
-            << ", Время запроса: " << formatTime(job.requestTime) << "\n";
-    }
-    std::cout << "-------------------------\n";
-}
-
-// Главное меню программы
-void menu() {
-    int choice;
-    while (true) {
-        std::cout << "\n--- Меню ---\n";
-        std::cout << "1. Добавить задание на печать\n";
-        std::cout << "2. Обработать задание\n";
-        std::cout << "3. Показать статистику\n";
-        std::cout << "4. Выйти\n";
-        std::cout << "Выберите действие: ";
-        std::cin >> choice;
-
-        switch (choice) {
-        case 1: {
-            std::string user, documentName;
-            int priority;
-            std::cout << "Введите имя пользователя: ";
-            std::cin >> user;
-            std::cout << "Введите приоритет (чем выше число, тем выше приоритет): ";
-            std::cin >> priority;
-            std::cout << "Введите название документа: ";
-            std::cin >> documentName;
-            addPrintJob(user, priority, documentName);
-            break;
-        }
-        case 2:
-            processPrintJob();
-            break;
-        case 3:
-            printStatistics();
-            break;
-        case 4:
-            std::cout << "Выход из программы.\n";
+    void processPrintJob()
+    {
+        if (printQueue.empty())
+        {
+            std::cout << "No print jobs in the queue." << std::endl;
             return;
-        default:
-            std::cout << "Некорректный выбор. Попробуйте снова.\n";
+        }
+
+        PrintJob job = printQueue.top();
+        printQueue.pop();
+
+
+        time_t currentTime = std::time(nullptr);
+        statistics.emplace_back(job.user, currentTime);
+
+        std::tm localTime;
+        localtime_s(&localTime, &currentTime); 
+
+        std::cout << "Printing job for user: " << job.user
+            << " with priority: " << job.priority
+            << " at " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") << std::endl;
+    }
+
+    void showStatistics() const 
+    {
+        if (statistics.empty()) 
+        {
+            std::cout << "No completed print jobs." << std::endl;
+            return;
+        }
+
+        std::cout << "Printing Statistics:" << std::endl;
+        for (const auto& stat : statistics) 
+        {
+            std::tm localTime;
+            localtime_s(&localTime, &stat.printTime); 
+
+            std::cout << "User: " << stat.user
+                << ", Time: " << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S") << std::endl;
         }
     }
-}
+};
 
 int main() {
-    menu();
+    Printer printer;
+    int choice;
+
+    while (true) 
+    {
+        std::cout << "\n1. Add print job\n2. Process print job\n3. Show statistics\n4. Exit\nChoose an option: ";
+        std::cin >> choice;
+
+        if (choice == 1)
+        {
+            std::string user;
+            int priority;
+            std::cout << "Enter user name: ";
+            std::cin >> user;
+            std::cout << "Enter priority (higher number = higher priority): ";
+            std::cin >> priority;
+            printer.addPrintJob(user, priority);
+        }
+        else if (choice == 2) 
+        {
+            printer.processPrintJob();
+        }
+        else if (choice == 3) 
+        {
+            printer.showStatistics();
+        }
+        else if (choice == 4) 
+        {
+            break;
+        }
+        else 
+        {
+            std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    }
+
     return 0;
 }
