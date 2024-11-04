@@ -111,22 +111,10 @@ int main() {
             std::cin >> priority;
             printer.addPrintJob(user, priority);
         }
-        else if (choice == 2) 
-        {
-            printer.processPrintJob();
-        }
-        else if (choice == 3) 
-        {
-            printer.showStatistics();
-        }
-        else if (choice == 4) 
-        {
-            break;
-        }
-        else 
-        {
-            std::cout << "Invalid choice. Please try again." << std::endl;
-        }
+        else if (choice == 2){printer.processPrintJob();}
+        else if (choice == 3){printer.showStatistics();}
+        else if (choice == 4) { break; }
+        else{std::cout << "Invalid choice. Please try again." << std::endl;}
     }
 
     return 0;
