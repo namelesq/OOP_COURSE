@@ -17,7 +17,6 @@ bool isDelimiter(char c)
 bool compareWords(const char* w1, const char* w2)
 {
     int i = 0;
-
     while (w1[i] != '\0' && w2[i] != '\0') 
     {
         if (w1[i] != w2[i]) { return false; }
@@ -78,7 +77,7 @@ int main()
             }
         }
     }
-  
+ 
     if (pos > 0)
     {
         currentWord[pos] = '\0';
