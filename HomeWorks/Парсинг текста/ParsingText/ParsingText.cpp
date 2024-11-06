@@ -10,20 +10,24 @@ struct WordCount
 
 bool isDelimiter(char c) 
 {
-    return c == ' ' || c == '\n' || c == '\t' || c == '.' || c == ',' || c == '!' || c == '?';
+    return c == ' ' || c == '\n' || c == '\t' || c == '.' || c == ',' || c == '!' || c == '?'
+        || c=='"'||c=='('||c==')'||c==';';
 }
 
-bool compareWords(const char* w1, const char* w2) {
+bool compareWords(const char* w1, const char* w2)
+{
     int i = 0;
+
     while (w1[i] != '\0' && w2[i] != '\0') 
     {
-        if (w1[i] != w2[i]) return false;
+        if (w1[i] != w2[i]) { return false; }
         i++;
     }
     return w1[i] == '\0' && w2[i] == '\0';
 }
 
-void copyWord(char* dest, const char* src) {
+void copyWord(char* dest, const char* src)
+{
     int i = 0;
     while (src[i] != '\0')
     {
@@ -33,7 +37,8 @@ void copyWord(char* dest, const char* src) {
     dest[i] = '\0';
 }
 
-int main() {
+int main() 
+{
     std::vector<WordCount> wordCounts;
 
     std::cout << "Enter text: ";
@@ -43,8 +48,7 @@ int main() {
     std::ofstream outFile("input.txt");
     outFile << text;
     outFile.close();
-
-
+   
     char currentWord[50];
     int pos = 0;
     for (int i = 0; text[i] != '\0'; i++) 
@@ -64,7 +68,7 @@ int main() {
                     break;
                 }
             }
-
+            
             if (!found) 
             {
                 WordCount newWord;
@@ -104,6 +108,6 @@ int main() {
         std::cout << wordCounts[i].word << ": " << wordCounts[i].count << std::endl;
     }
     statFile.close();
-
+    
     return 0;
 }
