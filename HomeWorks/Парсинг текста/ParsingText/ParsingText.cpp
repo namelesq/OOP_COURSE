@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <vector>
-#include <cstring>
-#include <string>
 
 struct WordCount
 {
@@ -12,29 +10,42 @@ struct WordCount
 
 bool isDelimiter(char c)
 {
-    return c == ' ' || c == '\n' || c == '\t' || c == '.' || c == ',' ||
+    return c == ' '|| c == '\n' || c == '\t' || c == '.' || c == ',' ||
         c == '!' || c == '?' || c == '"' || c == '(' || c == ')' || c == ';';
 }
 
 bool compareWords(const char* w1, const char* w2)
 {
-    return strcmp(w1, w2) == 0;
+    int i = 0;
+    while (w1[i] != '\0' && w2[i] != '\0')
+    {
+        if (w1[i] != w2[i])
+            return false;
+        i++;
+    }
+    return w1[i] == '\0' && w2[i] == '\0';
 }
 
 void copyWord(char* dest, const char* src)
 {
-    int size = 0;
-    for (int i = 0; i < 50; i++)
+    int i = 0;
+    while (src[i] != '\0' && i < 50 - 1) 
     {
-        if (src[i] != ' ') { size++; }
+        dest[i] = src[i];
+        i++;
     }
-    strcpy_s(dest,size, src);
+    dest[i] = '\0';
 }
 
 void saveTextToFile(const char* text, const char* filename)
 {
     std::ofstream outFile(filename);
-    outFile << text;
+    int i = 0;
+    while (text[i] != '\0')
+    {
+        outFile.put(text[i]);
+        i++;
+    }
     outFile.close();
 }
 
@@ -59,17 +70,39 @@ void processWord(const char* currentWord, std::vector<WordCount>& wordCounts)
     }
 }
 
+int customStrlen(const char* str)
+{
+    int length = 0;
+    while (str[length] != '\0')
+        length++;
+    return length;
+}
+
+void customMemmove(char* dest, const char* src, int n)
+{
+    if (dest < src)
+    {
+        for (int i = 0; i < n; i++)
+            dest[i] = src[i];
+    }
+    else
+    {
+        for (int i = n - 1; i >= 0; i--)
+            dest[i] = src[i];
+    }
+}
+
 void handleWordWrapping(char* text)
 {
-    int length = strlen(text);
+    int length = customStrlen(text);
     for (int i = 0; i < length - 1; ++i)
     {
         if (text[i] == '-' && text[i + 1] == '\n')
         {
-            std::memmove(&text[i], &text[i + 2], length - i - 1);
-            text[length - 2] = '\0';  
+            customMemmove(&text[i], &text[i + 2], length - i - 1);
+            text[length - 2] = '\0';
             length -= 2;
-            --i; 
+            --i;
         }
     }
 }
@@ -103,8 +136,15 @@ void saveWordCountsToFile(const std::vector<WordCount>& wordCounts, const char* 
     std::ofstream statFile(filename);
     for (const auto& wordCount : wordCounts)
     {
-        statFile << wordCount.word << ": " << wordCount.count << std::endl;
-        std::cout << wordCount.word << ": " << wordCount.count << std::endl;
+        int i = 0;
+        while (wordCount.word[i] != '\0')
+        {
+            statFile.put(wordCount.word[i]);
+            std::cout.put(wordCount.word[i]);
+            i++;
+        }
+        statFile << ": " << wordCount.count << std::endl;
+        std::cout << ": " << wordCount.count << std::endl;
     }
     statFile.close();
 }
