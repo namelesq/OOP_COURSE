@@ -107,6 +107,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binary tree", "Binary tree"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Binary_tree", "Practics\Binary tree\Binary tree\Binary_tree\Binary_tree.vcxproj", "{12C9A7E5-A619-473A-9921-A469C5DFA1F7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QuickSort", "QuickSort", "{8E4C75A8-708A-42F7-8AEF-906145642107}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Quicksort", "Practics\QuickSort\QuickSort\Quicksort\Quicksort.vcxproj", "{F1220921-1856-423C-9803-C5C64947CC68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -331,6 +335,14 @@ Global
 		{12C9A7E5-A619-473A-9921-A469C5DFA1F7}.Release|x64.Build.0 = Release|x64
 		{12C9A7E5-A619-473A-9921-A469C5DFA1F7}.Release|x86.ActiveCfg = Release|Win32
 		{12C9A7E5-A619-473A-9921-A469C5DFA1F7}.Release|x86.Build.0 = Release|Win32
+		{F1220921-1856-423C-9803-C5C64947CC68}.Debug|x64.ActiveCfg = Debug|x64
+		{F1220921-1856-423C-9803-C5C64947CC68}.Debug|x64.Build.0 = Debug|x64
+		{F1220921-1856-423C-9803-C5C64947CC68}.Debug|x86.ActiveCfg = Debug|Win32
+		{F1220921-1856-423C-9803-C5C64947CC68}.Debug|x86.Build.0 = Debug|Win32
+		{F1220921-1856-423C-9803-C5C64947CC68}.Release|x64.ActiveCfg = Release|x64
+		{F1220921-1856-423C-9803-C5C64947CC68}.Release|x64.Build.0 = Release|x64
+		{F1220921-1856-423C-9803-C5C64947CC68}.Release|x86.ActiveCfg = Release|Win32
+		{F1220921-1856-423C-9803-C5C64947CC68}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -386,6 +398,8 @@ Global
 		{E77EE3EE-4499-4C4C-A09F-93E19A0043A6} = {BDF38435-53BA-45F3-B4AC-E0194CD6A5A6}
 		{1276272C-3D47-4D79-A859-D624D232779A} = {84E8D2D7-CD5F-4F39-967D-7B165BF60748}
 		{12C9A7E5-A619-473A-9921-A469C5DFA1F7} = {1276272C-3D47-4D79-A859-D624D232779A}
+		{8E4C75A8-708A-42F7-8AEF-906145642107} = {84E8D2D7-CD5F-4F39-967D-7B165BF60748}
+		{F1220921-1856-423C-9803-C5C64947CC68} = {8E4C75A8-708A-42F7-8AEF-906145642107}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16BDC3CF-6FB1-4A48-8C48-A1BF70453EFC}
