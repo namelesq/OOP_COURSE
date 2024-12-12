@@ -1,0 +1,8 @@
+Wallets:
+Name: Debit Card, Balance: 1050
+Name: Credit Card, Balance: 200
+
+Expenses:
+Category: Food, Amount: 50
+Category: Entertainment, Amount: 100
+Category: Travel, Amount: 300

@@ -135,6 +135,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Виелица", "Виел�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viselitsa", "Экзамен\Игра виселица\Viselitsa\Viselitsa.vcxproj", "{AAD9D472-B514-4A28-874F-C6F7234467B4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Система финансов", "Система финансов", "{04141741-038F-45C1-A9E1-5EF3A39F1742}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FinanceSystem", "Экзамен\Система финансов\FinanceSystem\FinanceSystem.vcxproj", "{453528E4-A38A-4E2D-AF84-810844FFE4EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -415,6 +419,14 @@ Global
 		{AAD9D472-B514-4A28-874F-C6F7234467B4}.Release|x64.Build.0 = Release|x64
 		{AAD9D472-B514-4A28-874F-C6F7234467B4}.Release|x86.ActiveCfg = Release|Win32
 		{AAD9D472-B514-4A28-874F-C6F7234467B4}.Release|x86.Build.0 = Release|Win32
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Debug|x64.ActiveCfg = Debug|x64
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Debug|x64.Build.0 = Debug|x64
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Debug|x86.ActiveCfg = Debug|Win32
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Debug|x86.Build.0 = Debug|Win32
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Release|x64.ActiveCfg = Release|x64
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Release|x64.Build.0 = Release|x64
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Release|x86.ActiveCfg = Release|Win32
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -483,6 +495,8 @@ Global
 		{98BD9F17-06E6-48D7-A142-20FB69D37EDB} = {A3310D1E-513A-4315-97BA-B1EA21007190}
 		{0C031727-93F2-4DFE-B1C1-0CAFCA10C3CB} = {0E4D4DF2-AF34-44A4-9DC2-6B0BC4AE3630}
 		{AAD9D472-B514-4A28-874F-C6F7234467B4} = {0C031727-93F2-4DFE-B1C1-0CAFCA10C3CB}
+		{04141741-038F-45C1-A9E1-5EF3A39F1742} = {0E4D4DF2-AF34-44A4-9DC2-6B0BC4AE3630}
+		{453528E4-A38A-4E2D-AF84-810844FFE4EF} = {04141741-038F-45C1-A9E1-5EF3A39F1742}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16BDC3CF-6FB1-4A48-8C48-A1BF70453EFC}
