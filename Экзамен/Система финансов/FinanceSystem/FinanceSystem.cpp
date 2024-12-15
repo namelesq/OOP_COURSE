@@ -1,47 +1,38 @@
-﻿#include <iostream>
+﻿
+#include <iostream>
 #include <vector>
-#include <map>
 #include <string>
+#include <map>
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 
-class Expense {
-public:
-    std::string category;
-    double amount;
-
-    Expense(const std::string& cat, double amt) : category(cat), amount(amt) {}
-};
-
-class Wallet {
-private:
+struct Wallet {
     std::string name;
     double balance;
-
-public:
-    Wallet(const std::string& walletName, double initialBalance = 0.0)
-        : name(walletName), balance(initialBalance) {}
-
-    void addFunds(double amount) {
-        balance += amount;
-    }
-
-    bool spendFunds(double amount) {
-        if (balance >= amount) {
-            balance -= amount;
-            return true;
-        }
-        return false;
-    }
-
-    double getBalance() const {
-        return balance;
-    }
-
-    std::string getName() const {
-        return name;
-    }
 };
+
+struct Expense {
+    std::string category;
+    double amount;
+    std::string date; 
+};
+
+std::string getCurrentDate() {
+    return "2024-12-15"; 
+}
+
+void saveToFile(const std::string& filename, const std::string& content) {
+    std::ofstream file(filename);
+    if (file.is_open()) {
+        file << content;
+        file.close();
+        std::cout << "The data is saved to a file: " << filename << std::endl;
+    }
+    else {
+        std::cout << "Error saving the file!" << std::endl;
+    }
+}
 
 class FinanceManager {
 private:
@@ -49,92 +40,122 @@ private:
     std::vector<Expense> expenses;
 
 public:
-    void addWallet(const std::string& name, double initialBalance = 0.0) {
-        wallets.emplace_back(name, initialBalance);
+    void addWallet() {
+        Wallet wallet;
+        std::cout << "Enter the name of the wallet/card: ";
+        std::cin >> wallet.name;
+        std::cout << "Enter the initial balance: ";
+        std::cin >> wallet.balance;
+        wallets.push_back(wallet);
+        std::cout << "Wallet/card added!" << std::endl;
     }
 
-    bool addFundsToWallet(const std::string& name, double amount) {
+    void topUpWallet() {
+        std::string name;
+        double amount;
+        std::cout << "Enter the name of the wallet/card: ";
+        std::cin >> name;
+        std::cout << "Enter the deposit amount: ";
+        std::cin >> amount;
+
         for (auto& wallet : wallets) {
-            if (wallet.getName() == name) {
-                wallet.addFunds(amount);
-                return true;
+            if (wallet.name == name) {
+                wallet.balance += amount;
+                std::cout << "The balance has been replenished!" << std::endl;
+                return;
             }
         }
-        return false;
+        std::cout << "Wallet/card not found!" << std::endl;
     }
 
-    bool addExpense(const std::string& walletName, const std::string& category, double amount) {
-        for (auto& wallet : wallets) {
-            if (wallet.getName() == walletName && wallet.spendFunds(amount)) {
-                expenses.emplace_back(category, amount);
-                return true;
-            }
-        }
-        return false;
+    void addExpense() {
+        Expense expense;
+        std::cout << "Enter the expense category: ";
+        std::cin >> expense.category;
+        std::cout << "Enter the amount of the expense: ";
+        std::cin >> expense.amount;
+        expense.date = getCurrentDate();
+        expenses.push_back(expense);
+
+        std::cout << "Consumption has been added!" << std::endl;
     }
 
-    void generateReport(const std::string& period) {
+    void showReport(const std::string& period) {
         std::map<std::string, double> categoryTotals;
+        double total = 0;
 
         for (const auto& expense : expenses) {
-            categoryTotals[expense.category] += expense.amount;
+            if (period == "day" && expense.date == getCurrentDate()) {
+                categoryTotals[expense.category] += expense.amount;
+                total += expense.amount;
+            }
         }
 
-        std::cout << "Report for period: " << period << std::endl;
-        for (const auto& category : categoryTotals) {
-            std::cout << "Category: " << category.first << ", Total: " << category.second << std::endl;
+        std::cout << "Report for " << period << ":" << std::endl;
+        for (const auto& [category, amount] : categoryTotals) {
+            std::cout << category << ": " << amount << std::endl;
         }
+        std::cout << "Total amount: " << total << std::endl;
     }
 
-    void generateTopExpenses(const std::string& period, size_t topCount = 3) {
-        std::vector<Expense> sortedExpenses = expenses;
+    void showTopExpenses(const std::string& period, int topN) {
+        std::vector<Expense> filteredExpenses;
 
-        std::sort(sortedExpenses.begin(), sortedExpenses.end(), [](const Expense& a, const Expense& b) {
+        for (const auto& expense : expenses) {
+            if (period == "day" && expense.date == getCurrentDate()) {
+                filteredExpenses.push_back(expense);
+            }
+        }
+
+        sort(filteredExpenses.begin(), filteredExpenses.end(), [](const Expense& a, const Expense& b) {
             return a.amount > b.amount;
             });
 
-        std::cout << "Top " << topCount << " expenses for period: " << period << std::endl;
-        for (size_t i = 0; i < std::min(topCount, sortedExpenses.size()); ++i) {
-            std::cout << i + 1 << ". Category: " << sortedExpenses[i].category
-                << ", Amount: " << sortedExpenses[i].amount << std::endl;
-        }
-    }
-
-    void saveToFile(const std::string& filename) {
-        std::ofstream file(filename);
-        if (file.is_open()) {
-            file << "Wallets:\n";
-            for (const auto& wallet : wallets) {
-                file << "Name: " << wallet.getName() << ", Balance: " << wallet.getBalance() << "\n";
-            }
-
-            file << "\nExpenses:\n";
-            for (const auto& expense : expenses) {
-                file << "Category: " << expense.category << ", Amount: " << expense.amount << "\n";
-            }
-
-            file.close();
+        std::cout << "top-" << topN << " costs for " << period << ":" << std::endl;
+        for (int i = 0; i < std::min(topN, (int)filteredExpenses.size()); ++i) {
+            std::cout << filteredExpenses[i].category << ": " << filteredExpenses[i].amount << std::endl;
         }
     }
 };
 
 int main() {
     FinanceManager manager;
+    int choice;
 
-    manager.addWallet("Debit Card", 1000.0);
-    manager.addWallet("Credit Card", 500.0);
+    do {
+        std::cout << "\nMenu:\n"
+            << "1. Add a wallet/card\n"
+            << "2. Top up your wallet/card\n"
+            << "3. Add Expense\n"
+            << "4. Show the report (day)\n"
+            << "5. TOP 3 costs (day)\n"
+            << "0. Exit\n"
+            << "Your choice: ";
+        std::cin >> choice;
 
-    manager.addFundsToWallet("Debit Card", 200.0);
-
-    manager.addExpense("Debit Card", "Food", 50.0);
-    manager.addExpense("Debit Card", "Entertainment", 100.0);
-    manager.addExpense("Credit Card", "Travel", 300.0);
-
-    manager.generateReport("Week");
-
-    manager.generateTopExpenses("Week");
-
-    manager.saveToFile("report.txt");
+        switch (choice) {
+        case 1:
+            manager.addWallet();
+            break;
+        case 2:
+            manager.topUpWallet();
+            break;
+        case 3:
+            manager.addExpense();
+            break;
+        case 4:
+            manager.showReport("day");
+            break;
+        case 5:
+            manager.showTopExpenses("day", 3);
+            break;
+        case 0:
+            std::cout << "Exit the program." << std::endl;
+            break;
+        default:
+            std::cout << "Wrong choice. Try again." << std::endl;
+        }
+    } while (choice != 0);
 
     return 0;
 }
