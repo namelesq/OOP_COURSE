@@ -5,6 +5,17 @@
 #include <algorithm>
 #include <fstream>
 
+enum Actions
+{
+    ADD_WALLET = 1,
+    ADD_FUNDS = 2,
+    ADD_EXPENSE = 3,
+    GENERATE_REPORT = 4,
+    GENERATE_TOP_EXPENSES = 5,
+    SAVE_REPORTS = 6,
+    EXIT = 0
+};
+
 struct Transaction {
     std::string date;
     std::string category;
@@ -24,7 +35,7 @@ void addWallet(std::vector<Wallet>& wallets) {
     std::cout << "Введите начальный баланс: ";
     std::cin >> wallet.balance;
     wallets.push_back(wallet);
-    std::cout << "Кошелек добавлен.\n";
+    std::cout << "Кошелек добавлен." << std::endl;
 }
 
 void addFunds(std::vector<Wallet>& wallets) {
@@ -38,11 +49,11 @@ void addFunds(std::vector<Wallet>& wallets) {
     for (auto& wallet : wallets) {
         if (wallet.name == walletName) {
             wallet.balance += amount;
-            std::cout << "Баланс успешно пополнен.\n";
+            std::cout << "Баланс успешно пополнен." << std::endl;
             return;
         }
     }
-    std::cout << "Кошелек не найден.\n";
+    std::cout << "Кошелек не найден." << std::endl;
 }
 
 void addExpense(std::vector<Wallet>& wallets) {
@@ -62,15 +73,15 @@ void addExpense(std::vector<Wallet>& wallets) {
             if (wallet.balance >= amount) {
                 wallet.balance -= amount;
                 wallet.transactions.push_back({ date, category, amount });
-                std::cout << "Расход добавлен.\n";
+                std::cout << "Расход добавлен." << std::endl;
             }
             else {
-                std::cout << "Недостаточно средств.\n";
+                std::cout << "Недостаточно средств." << std::endl;
             }
             return;
         }
     }
-    std::cout << "Кошелек не найден.\n";
+    std::cout << "Кошелек не найден."<<std::endl;
 }
 
 void generateReport(const std::vector<Wallet>& wallets, const std::string& date) {
@@ -86,11 +97,11 @@ void generateReport(const std::vector<Wallet>& wallets, const std::string& date)
         }
     }
 
-    std::cout << "\nОтчет за " << date << ":\n";
+    std::cout << std::endl<< "Отчет за " << date << ":" << std::endl;
     for (const auto& [category, total] : categoryTotals) {
-        std::cout << "Категория: " << category << ", Сумма: " << total << "\n";
+        std::cout << "Категория: " << category << ", Сумма: " << total << std::endl;
     }
-    std::cout << "Общие расходы: " << totalExpenses << "\n";
+    std::cout << "Общие расходы: " << totalExpenses << std::endl;
 }
 
 void generateTopExpenses(const std::vector<Wallet>& wallets, const std::string& date) {
@@ -108,30 +119,30 @@ void generateTopExpenses(const std::vector<Wallet>& wallets, const std::string& 
         return a.amount > b.amount;
         });
 
-    std::cout << "\nТОП-3 расходов за " << date << ":\n";
+    std::cout << "\nТОП-3 расходов за " << date << ":"<<std::endl;
     for (size_t i = 0; i < allTransactions.size() && i < 3; ++i) {
         std::cout << i + 1 << ". Категория: " << allTransactions[i].category
-            << ", Сумма: " << allTransactions[i].amount << "\n";
+            << ", Сумма: " << allTransactions[i].amount << std::endl;
     }
 }
 
 void saveReports(const std::vector<Wallet>& wallets, const std::string& filename) {
     std::ofstream file(filename);
     if (!file.is_open()) {
-        std::cout << "Ошибка при сохранении файла.\n";
+        std::cout << "Ошибка при сохранении файла." << std::endl;
         return;
     }
 
     for (const auto& wallet : wallets) {
-        file << "Кошелек: " << wallet.name << ", Баланс: " << wallet.balance << "\n";
+        file << "Кошелек: " << wallet.name << ", Баланс: " << wallet.balance << std::endl;
         for (const auto& transaction : wallet.transactions) {
             file << "Дата: " << transaction.date << ", Категория: " << transaction.category
-                << ", Сумма: " << transaction.amount << "\n";
+                << ", Сумма: " << transaction.amount << std::endl;
         }
-        file << "\n";
+        file << std::endl;
     }
     file.close();
-    std::cout << "Отчеты сохранены в " << filename << "\n";
+    std::cout << "Отчеты сохранены в " << filename << std::endl;
 }
 
 int main() {
@@ -139,49 +150,51 @@ int main() {
     int choice;
     setlocale(LC_ALL, "rus");
     do {
-        std::cout << "\nУправление финансами:\n";
-        std::cout << "1. Добавить кошелек\n";
-        std::cout << "2. Пополнить баланс\n";
-        std::cout << "3. Добавить расход\n";
-        std::cout << "4. Сформировать отчет\n";
-        std::cout << "5. ТОП-3 расходов\n";
-        std::cout << "6. Сохранить отчеты\n";
-        std::cout << "0. Выход\n";
+        std::cout << std::endl<< "Управление финансами:" << std::endl;
+        std::cout << "1. Добавить кошелек" << std::endl;
+        std::cout << "2. Пополнить баланс" << std::endl;
+        std::cout << "3. Добавить расход" << std::endl;
+        std::cout << "4. Сформировать отчет" << std::endl;
+        std::cout << "5. ТОП-3 расходов" << std::endl;
+        std::cout << "6. Сохранить отчеты" << std::endl;
+        std::cout << "0. Выход" << std::endl;
         std::cout << "Введите ваш выбор: ";
         std::cin >> choice;
 
         switch (choice) {
-        case 1:
+        case ADD_WALLET:
             addWallet(wallets);
             break;
-        case 2:
+        case ADD_FUNDS:
             addFunds(wallets);
             break;
-        case 3:
+        case ADD_EXPENSE:
             addExpense(wallets);
             break;
-        case 4: {
+        case GENERATE_REPORT:
+        {
             std::string date;
             std::cout << "Введите дату (YYYY-MM-DD): ";
             std::cin >> date;
             generateReport(wallets, date);
             break;
         }
-        case 5: {
+        case GENERATE_TOP_EXPENSES: 
+        {
             std::string date;
             std::cout << "Введите дату (YYYY-MM-DD): ";
             std::cin >> date;
             generateTopExpenses(wallets, date);
             break;
         }
-        case 6:
+        case SAVE_REPORTS:
             saveReports(wallets, "finance_report.txt");
             break;
-        case 0:
-            std::cout << "Выход из программы.\n";
+        case EXIT:
+            std::cout << "Выход из программы."<<std::endl;
             break;
         default:
-            std::cout << "Неверный выбор. Попробуйте снова.\n";
+            std::cout << "Неверный выбор. Попробуйте снова."<<std::endl;
         }
     } while (choice != 0);
 
