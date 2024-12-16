@@ -133,10 +133,10 @@ void generateTopExpensesWeek(const std::vector<Wallet>& wallets, const std::stri
 {
     std::vector<Transaction> transactions;
     const size_t index1 = 5, index2 = 6, index3 = 8, index4 = 9;
-    std::string MonthInRange = " ";
+    std::string MonthInRange = "00";
     MonthInRange[0] = date1[index1];
     MonthInRange[1] = date1[index2];
-    std::string Day1_InRange = " ", Day2_InRange = " ";
+    std::string Day1_InRange = "00", Day2_InRange = "00";
     Day1_InRange[0] = date1[index3];
     Day1_InRange[1] = date1[index4];
     Day2_InRange[0] = date2[index3];
@@ -147,7 +147,7 @@ void generateTopExpensesWeek(const std::vector<Wallet>& wallets, const std::stri
         {
             if (transaction.date[index1] == MonthInRange[0] && transaction.date[index2] == MonthInRange[index2])
             {
-                std::string Date; Date[0] = transaction.date[index3];
+                std::string Date= "00"; Date[0] = transaction.date[index3];
                 Date[1] = transaction.date[index4];
                 if (std::stoi(Date) >= std::stoi(Day1_InRange) && std::stoi(Date) <= std::stoi(Day2_InRange))
                 {
