@@ -73,6 +73,7 @@ void TheGameProcess(std::vector<std::string>& words)
     while (attempts <= maxAttempts)
     {
         char letter;
+        std::cout << "You word: " << secretWord << std::endl;
         std::cout << "Enter a letter to search for it in the hidden word: ";
         std::cin >> letter;
         std::cout << std::endl;
@@ -86,7 +87,8 @@ void TheGameProcess(std::vector<std::string>& words)
         else
         {
             attempts++;
-            std::cout << "You didn't guess the letter. Attempts left: " << maxAttempts - attempts << std::endl;
+            std::cout << "You didn't guess the letter. You word: " << secretWord << std::endl;
+            std::cout<<"Attempts left : " << maxAttempts - attempts << std::endl;
             DisplayHangman(attempts);
         }
 
@@ -100,6 +102,7 @@ void TheGameProcess(std::vector<std::string>& words)
         {
             std::cout << "You have lost." << std::endl;
             std::cout << "The word was: " << word << std::endl;
+            std::cout << "The letters entered: " << secretWord << std::endl;
             DisplayHangman(attempts);
             break;
         }

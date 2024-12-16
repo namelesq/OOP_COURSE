@@ -11,8 +11,10 @@ enum Actions
     ADD_FUNDS = 2,
     ADD_EXPENSE = 3,
     GENERATE_REPORT = 4,
-    GENERATE_TOP_EXPENSES = 5,
-    SAVE_REPORTS = 6,
+    GENERATE_TOP_EXPENSES_DAY = 5,
+    GENERATE_TOP_EXPENSES_WEEK = 6,
+    GENERATE_TOP_EXPENSES_MONTH = 7,
+    SAVE_REPORTS = 8,
     EXIT = 0
 };
 
@@ -104,7 +106,7 @@ void generateReport(const std::vector<Wallet>& wallets, const std::string& date)
     std::cout << "Общие расходы: " << totalExpenses << std::endl;
 }
 
-void generateTopExpenses(const std::vector<Wallet>& wallets, const std::string& date) {
+void generateTopExpensesDays(const std::vector<Wallet>& wallets, const std::string& date) {
     std::vector<Transaction> allTransactions;
 
     for (const auto& wallet : wallets) {
@@ -114,15 +116,78 @@ void generateTopExpenses(const std::vector<Wallet>& wallets, const std::string& 
             }
         }
     }
-
+    
     std::sort(allTransactions.begin(), allTransactions.end(), [](const Transaction& a, const Transaction& b) {
         return a.amount > b.amount;
         });
 
     std::cout << "\nТОП-3 расходов за " << date << ":"<<std::endl;
-    for (size_t i = 0; i < allTransactions.size() && i < 3; ++i) {
+    for (size_t i = 0; i < allTransactions.size()&&i < 3; ++i) {
         std::cout << i + 1 << ". Категория: " << allTransactions[i].category
             << ", Сумма: " << allTransactions[i].amount << std::endl;
+    }
+}
+
+void generateTopExpensesWeek(const std::vector<Wallet>& wallets, const std::string& date1,
+    const std::string&date2)
+{
+    std::vector<Transaction> transactions;
+    const size_t index1 = 5, index2 = 6, index3 = 8, index4 = 9;
+    std::string MonthInRange = " ";
+    MonthInRange[0] = date1[index1];
+    MonthInRange[1] = date1[index2];
+    std::string Day1_InRange = " ", Day2_InRange = " ";
+    Day1_InRange[0] = date1[index3];
+    Day1_InRange[1] = date1[index4];
+    Day2_InRange[0] = date2[index3];
+    Day2_InRange[1] = date2[index4];
+    for (const auto& wallet : wallets)
+    {
+        for (const auto& transaction : wallet.transactions)
+        {
+            if (transaction.date[index1] == MonthInRange[0] && transaction.date[index2] == MonthInRange[index2])
+            {
+                std::string Date; Date[0] = transaction.date[index3];
+                Date[1] = transaction.date[index4];
+                if (std::stoi(Date) >= std::stoi(Day1_InRange) && std::stoi(Date) <= std::stoi(Day2_InRange))
+                {
+                    transactions.push_back(transaction);
+                }
+            }
+        }
+    }
+    std::sort(transactions.begin(), transactions.end(), [](const Transaction& a, const Transaction& b) {
+        return a.amount > b.amount;
+        });
+    std::cout << std::endl << "ТОП 3 расходов за неделю от " << date1 << " до " << date2 << std::endl;
+    for (size_t i = 0; i < transactions.size()&& i < 3; ++i) {
+        std::cout << i + 1 << ". Категория: " << transactions[i].category
+            << ", Сумма: " << transactions[i].amount << std::endl;
+    }
+}
+
+void generateTopExpensesMonth(const std::vector<Wallet>& wallets, const std::string& date)
+{
+    std::vector<Transaction> transactions;
+    const size_t index1 = 5, index2 = 6;
+    for (const auto& wallet : wallets)
+    {
+        for (const auto& transaction : wallet.transactions)
+        {
+            if (transaction.date[index1] == date[index1] &&
+                transaction.date[index1] == date[index2])
+            {
+                transactions.push_back(transaction);
+            }
+        }
+    }
+    std::sort(transactions.begin(), transactions.end(), [](const Transaction& a, const Transaction& b) {
+        return a.amount > b.amount;
+        });
+    std::cout << std::endl << "ТОП 3 расходов за месяц"<<date[index1]<<date[index2]<<std::endl;
+    for (size_t i = 0; i<transactions.size()&&i < 3; ++i) {
+        std::cout << i + 1 << ". Категория: " << transactions[i].category
+            << ", Сумма: " << transactions[i].amount << std::endl;
     }
 }
 
@@ -155,8 +220,10 @@ int main() {
         std::cout << "2. Пополнить баланс" << std::endl;
         std::cout << "3. Добавить расход" << std::endl;
         std::cout << "4. Сформировать отчет" << std::endl;
-        std::cout << "5. ТОП-3 расходов" << std::endl;
-        std::cout << "6. Сохранить отчеты" << std::endl;
+        std::cout << "5. ТОП-3 расходов за день" << std::endl;
+        std::cout << "6. ТОП-3 расходов за неделю" << std::endl;
+        std::cout << "7. ТОП-3 расходов за месяц" << std::endl;
+        std::cout << "8. Сохранить отчеты" << std::endl;
         std::cout << "0. Выход" << std::endl;
         std::cout << "Введите ваш выбор: ";
         std::cin >> choice;
@@ -179,12 +246,30 @@ int main() {
             generateReport(wallets, date);
             break;
         }
-        case GENERATE_TOP_EXPENSES: 
+        case GENERATE_TOP_EXPENSES_DAY:
         {
             std::string date;
             std::cout << "Введите дату (YYYY-MM-DD): ";
             std::cin >> date;
-            generateTopExpenses(wallets, date);
+            generateTopExpensesDays(wallets, date);
+            break;
+        }
+        case GENERATE_TOP_EXPENSES_WEEK:
+        {
+            std::string date1, date2;
+            std::cout << "Введите первую дату (YYYY-MM-DD): ";
+            std::cin >> date1;
+            std::cout << "Введите вторую дату (YYYY-MM-DD): ";
+            std::cin >> date2;
+            generateTopExpensesWeek(wallets, date1, date2);
+            break;
+        }
+        case GENERATE_TOP_EXPENSES_MONTH:
+        {
+            std::string date;
+            std::cout << "Введите дату (YYYY-MM-DD): ";
+            std::cin >> date;
+            generateTopExpensesMonth(wallets, date);
             break;
         }
         case SAVE_REPORTS:
