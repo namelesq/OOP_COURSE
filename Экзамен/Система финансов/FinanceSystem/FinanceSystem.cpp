@@ -128,64 +128,69 @@ void generateTopExpensesDays(const std::vector<Wallet>& wallets, const std::stri
     }
 }
 
-void generateTopExpensesWeek(const std::vector<Wallet>& wallets, const std::string& date1,
-    const std::string&date2)
+bool isValidDate(const std::string& date) 
 {
+    return date.length() == 10 && date[4] == '-' && date[7] == '-';
+}
+
+void generateTopExpensesWeek(const std::vector<Wallet>& wallets, const std::string& date1,
+    const std::string& date2) {
+    if (!isValidDate(date1) || !isValidDate(date2)) {
+        std::cout << "Ошибка: неверный формат даты. Используйте YYYY-MM-DD." << std::endl;
+        return;
+    }
+
+    std::string month1 = date1.substr(5, 2);
+    std::string day1 = date1.substr(8, 2);
+    std::string day2 = date2.substr(8, 2);
+
     std::vector<Transaction> transactions;
-    const size_t index1 = 5, index2 = 6, index3 = 8, index4 = 9;
-    std::string MonthInRange = "00";
-    MonthInRange[0] = date1[index1];
-    MonthInRange[1] = date1[index2];
-    std::string Day1_InRange = "00", Day2_InRange = "00";
-    Day1_InRange[0] = date1[index3];
-    Day1_InRange[1] = date1[index4];
-    Day2_InRange[0] = date2[index3];
-    Day2_InRange[1] = date2[index4];
-    for (const auto& wallet : wallets)
-    {
-        for (const auto& transaction : wallet.transactions)
-        {
-            if (transaction.date[index1] == MonthInRange[0] && transaction.date[index2] == MonthInRange[index2])
-            {
-                std::string Date= "00"; Date[0] = transaction.date[index3];
-                Date[1] = transaction.date[index4];
-                if (std::stoi(Date) >= std::stoi(Day1_InRange) && std::stoi(Date) <= std::stoi(Day2_InRange))
-                {
+    for (const auto& wallet : wallets) {
+        for (const auto& transaction : wallet.transactions) {
+            if (transaction.date.substr(5, 2) == month1) {
+                std::string transactionDay = transaction.date.substr(8, 2);
+                if (std::stoi(transactionDay) >= std::stoi(day1) &&
+                    std::stoi(transactionDay) <= std::stoi(day2)) {
                     transactions.push_back(transaction);
                 }
             }
         }
     }
+
     std::sort(transactions.begin(), transactions.end(), [](const Transaction& a, const Transaction& b) {
         return a.amount > b.amount;
         });
+
     std::cout << std::endl << "ТОП 3 расходов за неделю от " << date1 << " до " << date2 << std::endl;
-    for (size_t i = 0; i < transactions.size()&& i < 3; ++i) {
+    for (size_t i = 0; i < transactions.size() && i < 3; ++i) {
         std::cout << i + 1 << ". Категория: " << transactions[i].category
             << ", Сумма: " << transactions[i].amount << std::endl;
     }
 }
 
-void generateTopExpensesMonth(const std::vector<Wallet>& wallets, const std::string& date)
-{
+void generateTopExpensesMonth(const std::vector<Wallet>& wallets, const std::string& date) {
+    if (!isValidDate(date)) {
+        std::cout << "Ошибка: неверный формат даты. Используйте YYYY-MM-DD." << std::endl;
+        return;
+    }
+
+    std::string month = date.substr(5, 2);
     std::vector<Transaction> transactions;
-    const size_t index1 = 5, index2 = 6;
-    for (const auto& wallet : wallets)
-    {
-        for (const auto& transaction : wallet.transactions)
-        {
-            if (transaction.date[index1] == date[index1] &&
-                transaction.date[index1] == date[index2])
-            {
+
+    for (const auto& wallet : wallets) {
+        for (const auto& transaction : wallet.transactions) {
+            if (transaction.date.substr(5, 2) == month) {
                 transactions.push_back(transaction);
             }
         }
     }
+
     std::sort(transactions.begin(), transactions.end(), [](const Transaction& a, const Transaction& b) {
         return a.amount > b.amount;
         });
-    std::cout << std::endl << "ТОП 3 расходов за месяц"<<date[index1]<<date[index2]<<std::endl;
-    for (size_t i = 0; i<transactions.size()&&i < 3; ++i) {
+
+    std::cout << std::endl << "ТОП 3 расходов за месяц " << month << std::endl;
+    for (size_t i = 0; i < transactions.size() && i < 3; ++i) {
         std::cout << i + 1 << ". Категория: " << transactions[i].category
             << ", Сумма: " << transactions[i].amount << std::endl;
     }
